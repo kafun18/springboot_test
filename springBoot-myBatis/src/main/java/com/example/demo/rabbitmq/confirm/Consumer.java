@@ -1,16 +1,10 @@
-package com.example.demo.rabbitmq.quickstart;
+package com.example.demo.rabbitmq.confirm;
 
+import com.rabbitmq.client.*;
 
-import com.rabbitmq.client.Channel;
-import com.rabbitmq.client.Connection;
-import com.rabbitmq.client.ConnectionFactory;
-import com.rabbitmq.client.QueueingConsumer;
+import java.io.IOException;
 
-import java.util.Map;
-
-//消费者
 public class Consumer {
-
     public static void main(String[] args) throws Exception{
         //1、创建一个ConnectionFactory
         ConnectionFactory connectionFactory = new ConnectionFactory();
@@ -24,28 +18,25 @@ public class Consumer {
         //3、通过connection创建一个Channel
         Channel channel = connection.createChannel();
 
-        //4、声明（创建）一个队列
-        String queueName = "test001";
-        channel.queueDeclare(queueName,true,
-                false,false,null);
+        String exchangeName = "test_confirm_exchange";
+        String routingKey = "confirm.*";
+        String queueName = "test_confirm_queue";
+
+        //4、声明交换机和队列，然后进行绑定设置，最后制定路由key
+        channel.exchangeDeclare(exchangeName,"topic",true);
+        channel.queueDeclare(queueName,true,false,false,null);
+        channel.queueBind(queueName,exchangeName,routingKey);
 
         //5、创建消费者
         QueueingConsumer queueingConsumer = new QueueingConsumer(channel);
-
-        //6、设置Channel
         channel.basicConsume(queueName,true,queueingConsumer);
 
         while (true){
-            //7、获取消息
-            QueueingConsumer.Delivery delivery = queueingConsumer.nextDelivery();
+            QueueingConsumer.Delivery delivery =
+                    queueingConsumer.nextDelivery();
             String msg = new String(delivery.getBody());
-            System.err.println("消费者："+msg);
-            Map<String, Object> headers = delivery.getProperties().getHeaders();
-            System.err.println("headers get my1 value:" + headers.get("my1"));
-
-//            delivery.getEnvelope();
+            System.err.println("消费者：" + msg);
         }
 
     }
-
 }
