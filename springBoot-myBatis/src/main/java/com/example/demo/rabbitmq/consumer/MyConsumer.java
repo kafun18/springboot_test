@@ -12,6 +12,7 @@ public class MyConsumer extends DefaultConsumer{
     }
 
     @Override
+    //消费端自定义监听
     public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body) throws IOException {
         System.err.println("---consumer message---");
         System.err.println("consumerTag:"+consumerTag);

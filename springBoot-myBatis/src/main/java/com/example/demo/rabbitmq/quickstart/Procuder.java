@@ -33,6 +33,7 @@ public class Procuder {
                 .deliveryMode(2)
                 .contentEncoding("UTF-8")
                 //过期时间
+                //消息一发出去就开始计算时间
                 .expiration("10000")
                 .headers(headers)
                 .build();
