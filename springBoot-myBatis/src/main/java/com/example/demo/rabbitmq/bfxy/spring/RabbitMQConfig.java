@@ -1,5 +1,7 @@
 package com.example.demo.rabbitmq.bfxy.spring;
 
+import com.example.demo.rabbitmq.bfxy.spring.adapter.MessageDelegate;
+import com.example.demo.rabbitmq.bfxy.spring.convert.TextMessageConverter;
 import com.rabbitmq.client.Channel;
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
@@ -8,6 +10,7 @@ import org.springframework.amqp.rabbit.core.ChannelAwareMessageListener;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
+import org.springframework.amqp.rabbit.listener.adapter.MessageListenerAdapter;
 import org.springframework.amqp.support.ConsumerTagStrategy;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -138,13 +141,23 @@ public class RabbitMQConfig {
             }
         });
         //消息监听
-        container.setMessageListener(new ChannelAwareMessageListener() {
+        /*container.setMessageListener(new ChannelAwareMessageListener() {
             @Override
             public void onMessage(Message message, Channel channel) throws Exception {
                 String msg = new String(message.getBody());
                 System.err.println("----------消费者: " + msg);
             }
-        });
+        });*/
+
+
+         //1 适配器方式. 默认是有自己的方法名字的：handleMessage
+         // 可以自己指定一个方法的名字: consumeMessage
+         // 也可以添加一个转换器: 从字节数组转换为String
+         MessageListenerAdapter adapter = new MessageListenerAdapter(new MessageDelegate());
+         adapter.setDefaultListenerMethod("consumeMessage");
+         adapter.setMessageConverter(new TextMessageConverter());
+         container.setMessageListener(adapter);
+
         return container;
     }
 

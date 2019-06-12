@@ -8,6 +8,9 @@ import com.rabbitmq.client.ConnectionFactory;
 
 import java.io.IOException;
 
+/**
+ * Confirm确认消息
+ */
 public class Producer {
     public static void main(String[] args) throws Exception{
         //1、创建一个ConnectionFactory
@@ -36,13 +39,15 @@ public class Producer {
         //6、添加一个确认监听
         channel.addConfirmListener(new ConfirmListener() {
             @Override
+            //发送成功监听器返回应答
             public void handleAck(long l, boolean b) throws IOException {
-                System.err.println("----no ack----");
+                System.err.println("----ack----");
             }
 
             @Override
+            //发送失败监听器返回应答
             public void handleNack(long l, boolean b) throws IOException {
-                System.err.println("----ack----");
+                System.err.println("----no ack----");
             }
         });
     }

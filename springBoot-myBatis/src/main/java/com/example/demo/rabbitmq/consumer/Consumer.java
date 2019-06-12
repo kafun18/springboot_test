@@ -5,6 +5,9 @@ import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 import com.rabbitmq.client.QueueingConsumer;
 
+/**
+ * Return消息机制
+ */
 public class Consumer {
     public static void main(String[] args) throws Exception{
         //1、创建一个ConnectionFactory
