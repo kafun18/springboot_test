@@ -1,5 +1,8 @@
 package com.example.demo.rabbitmq.bfxy.spring;
 
+import com.example.demo.rabbitmq.bfxy.spring.entity.Order;
+import com.example.demo.rabbitmq.bfxy.spring.entity.Packaged;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.amqp.AmqpException;
@@ -109,4 +112,95 @@ public class RabbitmqAMQPTest {
         rabbitTemplate.convertAndSend("topic002", "rabbit.abc", "hello object message send!");
     }
 
+    @Test
+    //检测对应RabbitMQConfig类的适配器1
+    public void testSendMessage4Text() throws Exception {
+        //1 创建消息
+        MessageProperties messageProperties = new MessageProperties();
+        messageProperties.setContentType("text/plain");
+        Message message = new Message("mq 消息1234".getBytes(), messageProperties);
+
+        rabbitTemplate.send("topic001", "spring.abc", message);
+        rabbitTemplate.send("topic002", "rabbit.abc", message);
+    }
+
+    //对应1.1 支持json格式的转换器
+    @Test
+    public void testSendJsonMessage() throws Exception {
+
+        Order order = new Order();
+        order.setId("001");
+        order.setName("消息订单");
+        order.setContent("描述信息");
+        ObjectMapper mapper = new ObjectMapper();
+        String json = mapper.writeValueAsString(order);
+        System.err.println("order 4 json: " + json);
+
+        MessageProperties messageProperties = new MessageProperties();
+        //这里注意一定要修改contentType为 application/json
+        messageProperties.setContentType("application/json");
+        Message message = new Message(json.getBytes(), messageProperties);
+
+        rabbitTemplate.send("topic001", "spring.order", message);
+    }
+
+    //对应1.2 DefaultJackson2JavaTypeMapper & Jackson2JsonMessageConverter 支持java对象转换
+    @Test
+    public void testSendJavaMessage() throws Exception {
+
+        Order order = new Order();
+        order.setId("001");
+        order.setName("订单消息");
+        order.setContent("订单描述信息");
+        ObjectMapper mapper = new ObjectMapper();
+        String json = mapper.writeValueAsString(order);
+        System.err.println("order 4 json: " + json);
+
+        MessageProperties messageProperties = new MessageProperties();
+        //这里注意一定要修改contentType为 application/json
+        messageProperties.setContentType("application/json");
+        //通过1.2 DefaultJackson2JavaTypeMapper & Jackson2JsonMessageConverter 支持java对象转换
+        //JSon对象转换成Java对象
+        messageProperties.getHeaders().put("__TypeId__", "com.example.demo.rabbitmq.bfxy.spring.entity.Order");
+        Message message = new Message(json.getBytes(), messageProperties);
+
+        rabbitTemplate.send("topic001", "spring.order", message);
+    }
+
+    //1.3 DefaultJackson2JavaTypeMapper & Jackson2JsonMessageConverter 支持java对象多映射转换
+    @Test
+    public void testSendMappingMessage() throws Exception {
+
+        ObjectMapper mapper = new ObjectMapper();
+
+        Order order = new Order();
+        order.setId("001");
+        order.setName("订单消息");
+        order.setContent("订单描述信息");
+
+        String json1 = mapper.writeValueAsString(order);
+        System.err.println("order 4 json: " + json1);
+
+        MessageProperties messageProperties1 = new MessageProperties();
+        //这里注意一定要修改contentType为 application/json
+        messageProperties1.setContentType("application/json");
+        messageProperties1.getHeaders().put("__TypeId__", "order");
+        Message message1 = new Message(json1.getBytes(), messageProperties1);
+        rabbitTemplate.send("topic001", "spring.order", message1);
+
+        Packaged pack = new Packaged();
+        pack.setId("002");
+        pack.setName("包裹消息");
+        pack.setDescription("包裹描述信息");
+
+        String json2 = mapper.writeValueAsString(pack);
+        System.err.println("pack 4 json: " + json2);
+
+        MessageProperties messageProperties2 = new MessageProperties();
+        //这里注意一定要修改contentType为 application/json
+        messageProperties2.setContentType("application/json");
+        messageProperties2.getHeaders().put("__TypeId__", "packaged");
+        Message message2 = new Message(json2.getBytes(), messageProperties2);
+        rabbitTemplate.send("topic001", "spring.pack", message2);
+    }
 }

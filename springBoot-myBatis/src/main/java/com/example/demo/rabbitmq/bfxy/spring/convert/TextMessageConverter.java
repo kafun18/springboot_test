@@ -7,11 +7,13 @@ import org.springframework.amqp.support.converter.MessageConverter;
 
 public class TextMessageConverter implements MessageConverter {
 
+	//toMessage表示java对象转换成message对象
 	@Override
 	public Message toMessage(Object object, MessageProperties messageProperties) throws MessageConversionException {
 		return new Message(object.toString().getBytes(), messageProperties);
 	}
 
+	//fromMessage表示message对象转换成java对象
 	@Override
 	public Object fromMessage(Message message) throws MessageConversionException {
 		String contentType = message.getMessageProperties().getContentType();

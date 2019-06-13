@@ -13,7 +13,7 @@ public class MessageDelegate {
         System.err.println("默认方法, 消息内容:" + new String(messageBody));
     }
 
-    /*public void consumeMessage(byte[] messageBody) {
+    public void consumeMessage(byte[] messageBody) {
         System.err.println("字节数组方法, 消息内容:" + new String(messageBody));
     }
 
@@ -49,5 +49,5 @@ public class MessageDelegate {
 
     public void consumeMessage(File file) {
         System.err.println("文件对象 方法, 消息内容:" + file.getName());
-    }*/
+    }
 }
