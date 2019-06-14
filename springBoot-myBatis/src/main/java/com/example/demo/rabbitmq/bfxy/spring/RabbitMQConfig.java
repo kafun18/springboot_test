@@ -1,6 +1,8 @@
 package com.example.demo.rabbitmq.bfxy.spring;
 
 import com.example.demo.rabbitmq.bfxy.spring.adapter.MessageDelegate;
+import com.example.demo.rabbitmq.bfxy.spring.convert.ImageMessageConverter;
+import com.example.demo.rabbitmq.bfxy.spring.convert.PDFMessageConverter;
 import com.example.demo.rabbitmq.bfxy.spring.convert.TextMessageConverter;
 import com.rabbitmq.client.Channel;
 import org.springframework.amqp.core.*;
@@ -12,6 +14,7 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
 import org.springframework.amqp.rabbit.listener.adapter.MessageListenerAdapter;
 import org.springframework.amqp.support.ConsumerTagStrategy;
+import org.springframework.amqp.support.converter.ContentTypeDelegatingMessageConverter;
 import org.springframework.amqp.support.converter.DefaultJackson2JavaTypeMapper;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.context.annotation.Bean;
@@ -31,6 +34,7 @@ public class RabbitMQConfig {
         CachingConnectionFactory connectionFactory =
                 new CachingConnectionFactory();
         connectionFactory.setAddresses("39.108.160.171");
+//        connectionFactory.setPort(5672);
         connectionFactory.setUsername("guest");
         connectionFactory.setPassword("guest");
         connectionFactory.setVirtualHost("/");
@@ -203,7 +207,7 @@ public class RabbitMQConfig {
 
 
         //1.3 DefaultJackson2JavaTypeMapper & Jackson2JsonMessageConverter 支持java对象多映射转换
-         MessageListenerAdapter adapter = new MessageListenerAdapter(new MessageDelegate());
+         /*MessageListenerAdapter adapter = new MessageListenerAdapter(new MessageDelegate());
          adapter.setDefaultListenerMethod("consumeMessage");
          Jackson2JsonMessageConverter jackson2JsonMessageConverter = new Jackson2JsonMessageConverter();
          DefaultJackson2JavaTypeMapper javaTypeMapper = new DefaultJackson2JavaTypeMapper();
@@ -216,7 +220,37 @@ public class RabbitMQConfig {
 
          jackson2JsonMessageConverter.setJavaTypeMapper(javaTypeMapper);
          adapter.setMessageConverter(jackson2JsonMessageConverter);
-         container.setMessageListener(adapter);
+         container.setMessageListener(adapter);*/
+
+
+        //1.4 ext convert
+
+        MessageListenerAdapter adapter = new MessageListenerAdapter(new MessageDelegate());
+        adapter.setDefaultListenerMethod("consumeMessage");
+
+        //全局的转换器:
+        ContentTypeDelegatingMessageConverter convert = new ContentTypeDelegatingMessageConverter();
+
+        TextMessageConverter textConvert = new TextMessageConverter();
+        convert.addDelegate("text", textConvert);
+        convert.addDelegate("html/text", textConvert);
+        convert.addDelegate("xml/text", textConvert);
+        convert.addDelegate("text/plain", textConvert);
+
+        Jackson2JsonMessageConverter jsonConvert = new Jackson2JsonMessageConverter();
+        convert.addDelegate("json", jsonConvert);
+        convert.addDelegate("application/json", jsonConvert);
+
+        ImageMessageConverter imageConverter = new ImageMessageConverter();
+        convert.addDelegate("image/png", imageConverter);
+        convert.addDelegate("image", imageConverter);
+
+        PDFMessageConverter pdfConverter = new PDFMessageConverter();
+        convert.addDelegate("application/pdf", pdfConverter);
+
+
+        adapter.setMessageConverter(convert);
+        container.setMessageListener(adapter);
 
 
 

@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.HashMap;
 
 
@@ -203,4 +205,22 @@ public class RabbitmqAMQPTest {
         Message message2 = new Message(json2.getBytes(), messageProperties2);
         rabbitTemplate.send("topic001", "spring.pack", message2);
     }
+
+    @Test
+    public void testSendExtConverterMessage() throws Exception {
+            //读取H盘work文件下的图片文件到字节数组body这里
+			byte[] body = Files.readAllBytes(Paths.get("H:/work", "picture.png"));
+			MessageProperties messageProperties = new MessageProperties();
+			messageProperties.setContentType("image/png");
+			messageProperties.getHeaders().put("extName", "png");
+			Message message = new Message(body, messageProperties);
+			rabbitTemplate.send("", "image_queue", message);
+
+        /*byte[] body = Files.readAllBytes(Paths.get("H:/work", "MySQL.pdf"));
+        MessageProperties messageProperties = new MessageProperties();
+        messageProperties.setContentType("application/pdf");
+        Message message = new Message(body, messageProperties);
+        rabbitTemplate.send("", "pdf_queue", message);*/
+    }
+
 }
