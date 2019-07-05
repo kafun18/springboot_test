@@ -35,6 +35,7 @@ public class RabbitSender {
 	
 	//回调函数: return返回
 	final ReturnCallback returnCallback = new RabbitTemplate.ReturnCallback() {
+		//message是消息，replyCode是返回的错误码，replyText是错误提示内容
 		@Override
 		public void returnedMessage(org.springframework.amqp.core.Message message, int replyCode, String replyText,
 				String exchange, String routingKey) {
@@ -47,7 +48,9 @@ public class RabbitSender {
 	public void send(Object message, Map<String, Object> properties) throws Exception {
 		MessageHeaders mhs = new MessageHeaders(properties);
 		Message msg = MessageBuilder.createMessage(message, mhs);
+		//消息確認模式
 		rabbitTemplate.setConfirmCallback(confirmCallback);
+		//消息返回模式
 		rabbitTemplate.setReturnCallback(returnCallback);
 		//id + 时间戳 全局唯一 
 		CorrelationData correlationData = new CorrelationData("1234567890");
