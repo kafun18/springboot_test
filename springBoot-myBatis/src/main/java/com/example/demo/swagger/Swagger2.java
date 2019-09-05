@@ -19,6 +19,7 @@ public class Swagger2 {
                 .build();
     }
 
+    @Bean
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title("springboot利用swagger构建api文档")
