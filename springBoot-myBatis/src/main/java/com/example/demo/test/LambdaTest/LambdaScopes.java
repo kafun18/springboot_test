@@ -7,7 +7,7 @@ package com.example.demo.test.LambdaTest;
  */
 public class LambdaScopes {
 
-    @FunctionalInterface
+//    @FunctionalInterface
     public interface Converter<F, T> {
         T convert(F from);
     }
@@ -25,6 +25,9 @@ public class LambdaScopes {
 
 //        num = 3;//在lambda表达式中试图修改num同样是不允许的。
 
+        Lambda4 lambda4 = new Lambda4();
+        lambda4.testScopes();
+
     }
 }
 
@@ -38,12 +41,16 @@ class Lambda4 {
     void testScopes() {
         LambdaScopes.Converter<Integer, String> stringConverter1 = (from) -> {
             outerNum = 23;
-            return String.valueOf(from);
+            return String.valueOf(from + outerNum);
         };
+        String a = stringConverter1.convert(2);
+        System.out.println(a);//25
 
         LambdaScopes.Converter<Integer, String> stringConverter2 = (from) -> {
             outerStaticNum = 72;
-            return String.valueOf(from);
+            return String.valueOf(from + outerStaticNum);
         };
+        String b = stringConverter2.convert(3);
+        System.out.println(b);//75
     }
 }
