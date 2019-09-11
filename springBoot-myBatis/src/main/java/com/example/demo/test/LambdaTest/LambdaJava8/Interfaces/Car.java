@@ -28,21 +28,21 @@ class Car {
 
     public static void main(String[] args) {
         //构造器引用：它的语法是Class::new，或者更一般的Class< T >::new
-        final Car car = Car.create( Car::new );
-        final List< Car > cars = Arrays.asList( car );
+        final Car car = Car.create(Car::new);
+        final List<Car> cars = Arrays.asList(car);
         System.out.println(1);
 
         //静态方法引用：它的语法是Class::static_method
-        cars.forEach( Car::collide );
+        cars.forEach(Car::collide);
         System.out.println(2);
 
         //特定类的任意对象的方法引用：它的语法是Class::method
-        cars.forEach( Car::repair );
+        cars.forEach(Car::repair);
         System.out.println(3);
 
         //特定对象的方法引用：它的语法是instance::method
-        final Car police = Car.create( Car::new );
-        cars.forEach( police::follow );
+        final Car police = Car.create(Car::new);
+        cars.forEach(police::follow);
     }
 }
 

@@ -3,7 +3,7 @@ package com.example.demo.test.LambdaTest.LambdaJava8;
 /**
  *  变量作用域
  */
-public class JavaTester2 {
+public class Java8Tester2 {
     final static String salutation = "Hello! ";
 
     public static void main(String args[]){

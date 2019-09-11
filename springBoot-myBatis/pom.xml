@@ -164,6 +164,12 @@
 			<artifactId>amqp-client</artifactId>
 			<version>3.6.5</version>
 		</dependency>
+		<!-- FastJson: 阿里巴巴开发的 JSON 库，性能十分优秀 -->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>1.2.47</version>
+		</dependency>
 
 	</dependencies>
 
