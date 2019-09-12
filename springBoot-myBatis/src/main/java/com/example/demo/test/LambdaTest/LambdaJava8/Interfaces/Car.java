@@ -3,6 +3,9 @@ package com.example.demo.test.LambdaTest.LambdaJava8.Interfaces;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * 方法引用
+ */
 class Car {
     @FunctionalInterface
     public interface Supplier<T> {

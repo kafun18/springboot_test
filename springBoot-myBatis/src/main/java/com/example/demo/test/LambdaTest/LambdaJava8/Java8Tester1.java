@@ -1,5 +1,8 @@
 package com.example.demo.test.LambdaTest.LambdaJava8;
 
+/**
+ * Lambda 表达式实例
+ */
 public class Java8Tester1 {
     public static void main(String args[]){
         Java8Tester1 tester = new Java8Tester1();

@@ -32,15 +32,24 @@ public class Java8Tester4 {
         // 如果 n 大于 3 test 方法返回 true
 
         System.out.println("输出大于 3 的所有数字:");
-        eval(list, n-> n > 3 );
+//        eval(list, n-> n > 3 );
+        //不调用eval方法，直接java8更精简写法
+        list.stream().filter(n -> n > 3).forEach(System.out::println);
     }
 
-    public static void eval(List<Integer> list, Predicate<Integer> predicate) {
+    //传统写法
+    /*public static void eval(List<Integer> list, Predicate<Integer> predicate) {
         for(Integer n: list) {
 
             if(predicate.test(n)) {
                 System.out.println(n + " ");
             }
         }
+    }*/
+
+    //java8精简写法
+    private static void eval(List<Integer> list, Predicate<Integer> predicate) {
+        list.stream().filter(predicate).forEach(System.out::println);
     }
+
 }
