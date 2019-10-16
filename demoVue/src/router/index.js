@@ -6,6 +6,7 @@ import Demo from '@/components/Demo'
 import Instance from '@/components/Instance'
 import Template from '@/components/Template'
 import Computed from '@/components/Computed'
+import Watch from '@/components/Watch'
 
 Vue.use(Router)
 
@@ -40,6 +41,11 @@ export default new Router({
       path: '/computed',
       name: 'Computed',
       component: Computed
+    },
+    {
+      path: '/watch',
+      name: 'Watch',
+      component: Watch
     }
   ]
 })
