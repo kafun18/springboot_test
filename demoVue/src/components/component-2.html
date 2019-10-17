@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>组件</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <javagirl title="组件一"></javagirl>
+        <javagirl title="组件二"></javagirl>
+        <hr>
+        <myblog v-for="(blog, index) in blogs" :key="index" :title="blog.title" :date="blog.date" :author="blog.author">
+        </myblog>
+    </div>
+    <script>
+        Vue.component('javagirl', {
+            data() {
+                return {
+                    counter: 0
+                }
+            },
+            props: ['title','date','author'],
+            template: '<div><button @click="counter++">' +
+                'hello {{counter}}!</button><div>{{title}}</div></div>'
+        })
+        Vue.component('myblog', {
+            props: ['title', 'date', 'author'],
+            template: '<div>' +
+                '<div>{{title}}</div>' +
+                '<div>{{date}}--{{author}}</div>' +
+                '</div>'
+        })
+        var app = new Vue({
+            el: '#app',
+            data: {
+                blogs: [
+                    {
+                        title: '标题一',
+                        date: '三国演义',
+                        author: '罗贯中'
+                    }, {
+                        title: '标题二',
+                        date: '红楼梦',
+                        author: '曹雪芹'
+                    }, {
+                        title: '标题三',
+                        date: '西游记',
+                        author: '吴承恩'
+                    }, {
+                        title: '标题四',
+                        date: '水浒传',
+                        author: '施耐庵'
+                    }
+                ],
+            }
+        })
+    </script>
+</body>
+
+</html>

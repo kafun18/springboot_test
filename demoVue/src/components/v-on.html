@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>事件处理</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <div>{{counter}}</div>
+        <input type="button" value="自增" v-on:click="increment(2)">
+        <!-- v-on:keydown.enter="submit"可以简写成@keydown.enter="submit" -->
+        <input type="text" @keydown.enter="submit">
+    </div>
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                counter: 0
+            },
+            methods: {
+                submit() {
+                    console.log("submit()");
+                },
+                increment(step) {
+                    this.counter = this.counter + step;
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
