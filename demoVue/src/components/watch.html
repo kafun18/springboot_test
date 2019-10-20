@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>侦听属性</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<!-- 当需要在数据变化时执行异步或开销较大的操作时，侦听属性方式是最有用的 -->
+    <div id="app">
+      {{fullName}}
+    </div>
+    <script>
+var app = new Vue({
+  el: "#app",
+  data: {
+    firstName: "zhang",
+    lastName: "san",
+    fullName: "zhang san"
+  },
+  watch: {
+    firstName(val) {
+      this.fullName = val + "" + this.lastName;
+    },
+    lastName(val) {
+      this.fullName = this.firstName + "" + val;
+    }
+  }
+});
+</script>

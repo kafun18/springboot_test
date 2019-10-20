@@ -12,8 +12,14 @@
         <javagirl title="组件一"></javagirl>
         <javagirl title="组件二"></javagirl>
         <hr>
-        <myblog v-for="(blog, index) in blogs" :key="index" :title="blog.title" :date="blog.date" :author="blog.author">
+        <myblog @sayhello="hello" v-for="(blog, index) in blogs" :key="index" :title="blog.title" :date="blog.date"
+            :author="blog.author">
+            <!-- 通过插槽分发内容，我们经常需要向一个组件传递内容 -->
+            <div style="color: tomato;">hello javaboy</div>
         </myblog>
+        <hr>
+        <!-- 动态组件，组件会在 `currentTabComponent` 改变时改变 -->
+        <component v-bind:is="currentTabComponent"></component>
     </div>
     <script>
         Vue.component('javagirl', {
@@ -22,7 +28,7 @@
                     counter: 0
                 }
             },
-            props: ['title','date','author'],
+            props: ['title', 'date', 'author'],
             template: '<div><button @click="counter++">' +
                 'hello {{counter}}!</button><div>{{title}}</div></div>'
         })
@@ -31,11 +37,22 @@
             template: '<div>' +
                 '<div>{{title}}</div>' +
                 '<div>{{date}}--{{author}}</div>' +
+                //通过插槽分发内容，Vue 自定义的 <slot> 元素让这变得非常简单
+                '<slot></slot>' +
+                // 子组件可以通过调用内建的 $emit 方法 并传入事件名称来触发一个事件
+                //$emit(\'sayhello\', title)的第二个参数title是使用事件抛出一个值
+                '<button @click="$emit(\'sayhello\', title)">点我触发$emit方法</button>' +
                 '</div>'
         })
         var app = new Vue({
             el: '#app',
+            methods: {
+                hello(val) {
+                    console.log("hello " + val + "!")
+                }
+            },
             data: {
+                currentTabComponent: 'javagirl',
                 blogs: [
                     {
                         title: '标题一',

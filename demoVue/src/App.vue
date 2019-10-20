@@ -9,7 +9,7 @@
 export default {
   name: 'App'
 }
-console.log(document.getElementById("app"));
+// console.log(document.getElementById("app"));
 </script>
 
 <style>
