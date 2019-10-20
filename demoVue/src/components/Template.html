@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>vue语法模板</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<!-- vue语法模板 -->
+
+<body>
+  <div id="app">
+    <div>{{a}}</div>
+    <button v-bind:disabled="enableBtn">按钮</button>
+    <div v-html="c"></div>
+    <button v-bind:disabled="!enableBtn" v-on:click="num++">按钮</button>
+    <div>{{num>101?'good':num}}</div>
+    <a v-bind:href="myurl" target="_target">进入百度地址</a>
+  </div>
+  <script>
+    var app = new Vue({
+      el: '#app',
+      data: {
+        a: 1,
+        enableBtn: true,
+        b: null,
+        c: '<h1>hello javaboy</h1>',
+        num: 99,
+        myurl: 'http://www.baidu.com'
+      }
+    })
+  </script>
+</body>
+
+</html>

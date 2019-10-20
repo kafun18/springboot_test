@@ -3,7 +3,6 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-// import Computed from './components/Computed'
 
 Vue.config.productionTip = false
 
@@ -14,9 +13,3 @@ new Vue({
   components: { App },
   template: '<App/>'
 });
-/* new Vue({
-  el: '#computed',
-  router,
-  components: { Computed },
-  template: '<Computed/>'
-}) */

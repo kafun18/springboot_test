@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>vue实例</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <!-- vue实例 -->
+    <div id="app">
+        <h1>hello javaboy</h1>
+        <div>{{data.a}}</div>
+    </div>
+    <script>
+        var data = { a: 1, b: null };
+        var app = new Vue({
+            el: '#app',
+            data: {
+                data: data
+            },
+            created: function () {
+                console.log("create");
+            }
+        })
+        console.log(data.a == app.a);
+        data.a = 99;
+        console.log(app.a);
+        data.b = 100;
+        console.log(data.a);
+        console.log(app.$el == document.getElementById("instance"));
+        console.log(app.$data == data);
+    </script>
+</body>
+
+</html>

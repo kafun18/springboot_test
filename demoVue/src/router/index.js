@@ -3,9 +3,6 @@ import Router from 'vue-router'
 import HelloWorld from '@/components/HelloWorld'
 import Login from '@/page/Login'
 import Demo from '@/components/Demo'
-import Instance from '@/components/Instance'
-import Template from '@/components/Template'
-import Computed from '@/components/Computed'
 
 Vue.use(Router)
 
@@ -25,21 +22,6 @@ export default new Router({
       path: '/demo',
       name: 'Demo',
       component: Demo
-    },
-    {
-      path: '/instance',
-      name: 'Instance',
-      component: Instance
-    },  
-    {
-      path: '/template',
-      name: 'Template',
-      component: Template
-    },
-    {
-      path: '/computed',
-      name: 'Computed',
-      component: Computed
     }
   ]
 })
