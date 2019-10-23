@@ -1,24 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <title>侦听属性</title>
+    <title>上传文件</title>
+    <link rel="stylesheet" type="text/css" href="./static/css/iview.css">
+    <script type="text/javascript" src="./static/js/vue.min.js"></script>
+    <script type="text/javascript" src="./static/js/iview.min.js"></script>
 </head>
+
 <body>
-<div id="app">
-    <i-button @click="show">Click me!</i-button>
-    <Modal v-model="visible" title="Welcome">Welcome to ViewUI</Modal>
-</div>
-<script>
-    new Vue({
-        el: '#app',
-        data: {
-            visible: false
-        },
-        methods: {
-            show: function () {
-                this.visible = true;
+    <div id="app">
+        <Form ref="formCustom" :model="formCustom" :rules="ruleCustom" :label-width="80">
+        <FormItem label="Password" prop="passwd">
+            <Input type="password" v-model="formCustom.passwd"></Input>
+        </FormItem>
+        <FormItem label="Confirm" prop="passwdCheck">
+            <Input type="password" v-model="formCustom.passwdCheck"></Input>
+        </FormItem>
+        <FormItem label="Age" prop="age">
+            <Input type="text" v-model="formCustom.age" number></Input>
+        </FormItem>
+        <FormItem>
+            <Button type="primary" @click="handleSubmit('formCustom')">Submit</Button>
+            <Button @click="handleReset('formCustom')" style="margin-left: 8px">Reset</Button>
+        </FormItem>
+    </Form>
+    </div>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                formInline: {
+                    user: '',
+                    password: ''
+                },
+                ruleInline: {
+                    user: [
+                        { required: true, message: 'Please fill in the user name', trigger: 'blur' }
+                    ],
+                    password: [
+                        { required: true, message: 'Please fill in the password.', trigger: 'blur' },
+                        { type: 'string', min: 6, message: 'The password length cannot be less than 6 bits', trigger: 'blur' }
+                    ]
+                }
+            },
+            methods: {
+                handleSubmit(name) {
+                    this.$refs[name].validate((valid) => {
+                        if (valid) {
+                            this.$Message.success('Success!');
+                        } else {
+                            this.$Message.error('Fail!');
+                        }
+                    })
+                }
             }
-        }
-    })
-</script>
+        })
+
+        /*new Vue({
+            el: '#app',
+            data: {
+                visible: false
+            },
+            methods: {
+                show: function () {
+                    this.visible = true;
+                }
+            }
+        })*/
+    </script>
+</body>
+
+</html>
