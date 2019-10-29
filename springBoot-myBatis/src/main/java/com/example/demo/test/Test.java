@@ -69,13 +69,20 @@ public class Test {
         System.out.println("a字符串有没包含中文字：" + a_isChinese);
         System.out.println("b字符串有没包含中文字：" + b_isChinese);*/
 
-        Girl girl = new Girl();
+        /*Girl girl = new Girl();
         girl.setId(1);
         girl.setAge(16);
         girl.setCupSize("36D");
         CommonUtil a = new CommonUtil();
         Map<String,Object> girlmap= a.beanToMap(girl);
-        System.out.println(girlmap);
+        System.out.println(girlmap);*/
+
+        String a = "唯品会Java开发手册》1.0版.pdf";
+        String b = a.split("\\.")[a.split("\\.").length-1];
+        System.out.println(b);
+
+        /*String uuid = UUID.randomUUID().toString().replace("-","").toLowerCase();
+        System.out.println(uuid);*/
 
 
 
