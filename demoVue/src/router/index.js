@@ -3,6 +3,9 @@ import Router from 'vue-router'
 import HelloWorld from '@/components/HelloWorld'
 import Login from '@/page/Login'
 import Demo from '@/components/Demo'
+import Home from '@/page/Home'
+import Test1 from '@/page/Test1'
+import Test2 from '@/page/Test2'
 
 Vue.use(Router)
 
@@ -11,9 +14,33 @@ export default new Router({
     {
       path: '/',
       name: 'Login',
-      component: Login
+      component: Login,
+      hidden:true
     },
     {
+      path: '/home',
+      name: 'Home',
+      component: Home,
+      hidden:true
+    },
+    {
+      path: '/home',
+      name: '导航一',
+      component: Home,
+      children:[
+        {
+          path: '/test1',
+          name: '选项1',
+          component: Test1
+        },
+        {
+          path: '/test2',
+          name: '选项2',
+          component: Test2
+        }
+      ]
+    },
+    /*{
       path: '/hello',
       name: 'HelloWorld',
       component: HelloWorld
@@ -22,6 +49,6 @@ export default new Router({
       path: '/demo',
       name: 'Demo',
       component: Demo
-    }
+    }*/
   ]
 })
