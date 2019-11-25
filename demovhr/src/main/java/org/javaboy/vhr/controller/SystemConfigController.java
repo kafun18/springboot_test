@@ -18,6 +18,6 @@ public class SystemConfigController {
 
     @GetMapping("/menu")
     public List<Menu> getMenusById(){
-        return null;
+        return menuService.getMenusById();
     }
 }
