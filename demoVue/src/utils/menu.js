@@ -7,16 +7,16 @@ export const initMenu = (router,store)=>{
 
     getRequest("/system/config/menu").then(data=>{
         if (data) {
-            let mtRoutes = formatRoutes(data);
-            router.addRoutes(fmRoutes);
-            store.commit('initRoutes',fmRoutes);
+            let fmtRoutes = formatRoutes(data);
+            router.addRoutes(fmtRoutes);
+            store.commit('initRoutes',fmtRoutes);
         }
     })
 }
 
 export const formatRoutes = (routes)=>{
     let fmRoutes=[];
-    routes.forEach(routes=>{
+    routes.forEach(route=>{
         let {
             path,
             component,
@@ -24,7 +24,7 @@ export const formatRoutes = (routes)=>{
             meta,
             iconCls,
             children
-        } = routes;
+        } = route;
         if (children && children instanceof Array) {
             children = formatRoutes(children);
         }
@@ -35,7 +35,17 @@ export const formatRoutes = (routes)=>{
             meta:meta,
             children:children,
             component(resolve){
-                require(['../page/'+component+'.vue'],resolve);
+              if (component.startsWith("Emp")){
+                require(['../page/emp/'+component+'.vue'],resolve);
+              }else if (component.startsWith("Per")){
+                require(['../page/per/'+component+'.vue'],resolve);
+              }else if (component.startsWith("Sal")){
+                require(['../page/sal/'+component+'.vue'],resolve);
+              }else if (component.startsWith("Sta")){
+                require(['../page/sta/'+component+'.vue'],resolve);
+              }else if (component.startsWith("Sys")){
+                require(['../page/sys/'+component+'.vue'],resolve);
+              }
             }
         }
         fmRoutes.push(fmRoute);

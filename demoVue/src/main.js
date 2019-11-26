@@ -15,6 +15,7 @@ import {postKeyValueRequest} from "./utils/api";
 import {putRequest} from "./utils/api";
 import {getRequest} from "./utils/api";
 import {deleteRequest} from "./utils/api";
+import {initMenu} from "./utils/menu";
 
 Vue.prototype.postRequest=postRequest;
 Vue.prototype.postKeyValueRequest=postKeyValueRequest;
@@ -26,6 +27,16 @@ Vue.config.productionTip = false
 
 Vue.use(ElementUI);
 Vue.use(ViewUI);
+
+router.beforeEach((to,from,next)=>{
+  if(to.path == '/'){
+    next();
+  }else {
+    initMenu(router,store);;
+    next();
+  }
+
+})
 
 /* eslint-disable no-new */
 new Vue({

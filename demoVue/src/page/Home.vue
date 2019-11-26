@@ -18,8 +18,8 @@
       <el-container>
 
         <el-aside width="200px">
-          <el-menu router>
-            <el-submenu index="1" v-for="(item,index) in this.$router.options.routes" v-if="!item.hidden" :key="index">
+          <el-menu router unique-opened>
+            <el-submenu :index="index" v-for="(item,index) in routes" v-if="!item.hidden" :key="index">
               <template slot="title">
                 <i class="el-icon-location"></i>
                 <span>{{item.name}}</span>
@@ -45,6 +45,11 @@
     data() {
       return {
         user: JSON.parse(window.sessionStorage.getItem("user"))
+      }
+    },
+    computed:{
+      routes(){
+        return this.$store.state.routes;
       }
     },
     methods: {
