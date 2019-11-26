@@ -19,7 +19,7 @@
 
         <el-aside width="200px">
           <el-menu router unique-opened>
-            <el-submenu :index="index" v-for="(item,index) in routes" v-if="!item.hidden" :key="index">
+            <el-submenu :index="index+''" v-for="(item,index) in routes" v-if="!item.hidden" :key="index">
               <template slot="title">
                 <i class="el-icon-location"></i>
                 <span>{{item.name}}</span>
@@ -67,6 +67,7 @@
           }).then(() => {
             this.getRequest('/logout');
             window.sessionStorage.removeItem("user");
+            this.$store.commit('initRoutes',[]);
             this.$router.replace("/");
           }).catch(() => {
             this.$message({
