@@ -35,7 +35,9 @@ export const formatRoutes = (routes)=>{
             meta:meta,
             children:children,
             component(resolve){
-              if (component.startsWith("Emp")){
+              if (component.startsWith("Home")){
+                require(['../page/'+component+'.vue'],resolve);
+              }else if (component.startsWith("Emp")){
                 require(['../page/emp/'+component+'.vue'],resolve);
               }else if (component.startsWith("Per")){
                 require(['../page/per/'+component+'.vue'],resolve);

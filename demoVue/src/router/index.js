@@ -4,8 +4,8 @@ import Router from 'vue-router'
 import Login from '@/page/Login'
 // import Demo from '@/components/Demo'
 import Home from '@/page/Home'
-import Test1 from '@/page/Test1'
-import Test2 from '@/page/Test2'
+// import Test1 from '@/page/Test1'
+// import Test2 from '@/page/Test2'
 
 Vue.use(Router)
 
@@ -23,7 +23,7 @@ export default new Router({
       component: Home,
       hidden:true
     },
-    {
+    /*{
       path: '/home',
       name: '导航一',
       component: Home,
@@ -39,7 +39,7 @@ export default new Router({
           component: Test2
         }
       ]
-    },
+    },*/
     /*{
       path: '/hello',
       name: 'HelloWorld',

@@ -4,8 +4,10 @@ import org.javaboy.vhr.mapper.MenuMapper;
 import org.javaboy.vhr.model.Hr;
 import org.javaboy.vhr.model.Menu;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.AntPathMatcher;
 
 import java.util.List;
 
@@ -18,5 +20,10 @@ public class MenuService {
         //通过springsecurity获取到用户的id
         return menuMapper.getMenusByHrId(((Hr) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
         .getId());
+    }
+
+//    @Cacheable
+    public List<Menu> getAllMenusWithRole(){
+        return menuMapper.getAllMenusWithRole();
     }
 }
