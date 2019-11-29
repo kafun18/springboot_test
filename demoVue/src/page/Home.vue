@@ -91,7 +91,8 @@
 
 <style>
   .homeHeader {
-    background-color: #409eff;
+    background-color: #BF3EFF;
+    /*background-color: #409eff;*/
     display: flex;
     /* 竖直居中 */
     align-items: center;

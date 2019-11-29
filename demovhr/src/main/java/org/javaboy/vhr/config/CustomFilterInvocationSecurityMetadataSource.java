@@ -18,7 +18,7 @@ import java.util.List;
  * 这个类的作用,主要根据用户传来的请求地址,分析出请求需要的角色
  */
 @Component
-public class MyFilter implements FilterInvocationSecurityMetadataSource{
+public class CustomFilterInvocationSecurityMetadataSource implements FilterInvocationSecurityMetadataSource{
 
     @Autowired
     MenuService menuService;

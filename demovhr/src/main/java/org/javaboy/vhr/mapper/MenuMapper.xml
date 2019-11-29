@@ -39,7 +39,7 @@
         <collection property="roles" ofType="org.javaboy.vhr.model.Role">
             <id column="rid" property="id"/>
             <result column="rname" property="name"/>
-            <result column="rnameZh" property="rnameZh"/>
+            <result column="rnameZh" property="nameZh"/>
         </collection>
     </resultMap>
     <select id="getAllMenusWithRole" resultMap="MenuWithRole">
