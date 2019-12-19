@@ -111,7 +111,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 } else {
                     respBean = RespBean.error("登录失败!");
                 }
-                resp.setStatus(401);
+                resp.setStatus(500);
                 ObjectMapper om = new ObjectMapper();
                 PrintWriter out = resp.getWriter();
                 out.write(om.writeValueAsString(respBean));
@@ -143,6 +143,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 if (authException instanceof InsufficientAuthenticationException) {
                     respBean.setMsg("请求失败，请联系管理员！");
                 }
+                resp.setStatus(500);
                 out.write(new ObjectMapper().writeValueAsString(respBean));
                 out.flush();
                 out.close();

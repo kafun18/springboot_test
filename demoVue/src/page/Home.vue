@@ -40,7 +40,7 @@
           <div class="homeWelcome" v-if="this.$router.currentRoute.path=='/home'">
             欢迎来到管理系统！
           </div>
-          <router-view/>
+          <router-view class="homeRouterView"/>
         </el-main>
       </el-container>
     </el-container>
@@ -90,6 +90,12 @@
 </script>
 
 <style>
+  .el-aside {
+    overflow:hidden;
+  }
+  .homeRouterView {
+    margin-top: 20px;
+  }
   .homeHeader {
     background-color: #BF3EFF;
     /*background-color: #409eff;*/
