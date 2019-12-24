@@ -20,7 +20,7 @@ axios.interceptors.response.use(success=>{
         Message.error({message:'尚未登陆,请登录'})
     }else{
         if (error.response.data.msg) {
-            Message.error({message:error.data.msg});
+            Message.error({message:error.response.data.msg});
         }else{
             Message.error({message:'未知错误'});
         }

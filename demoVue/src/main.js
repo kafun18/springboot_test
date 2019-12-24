@@ -28,18 +28,21 @@ Vue.config.productionTip = false
 Vue.use(ElementUI);
 Vue.use(ViewUI);
 
+/*全局前置导航钩子 beforeEach
+1、to:即将要进入的目标路由对象；
+2、from:当前导航即将要离开的路由对象；
+3、next ：调用该方法后，才能进入下一个钩子函数（afterEach）*/
 router.beforeEach((to,from,next)=>{
   if(to.path == '/'){
     next();
   }else {
     if(window.sessionStorage.getItem("user")){
-      initMenu(router,store);;
+      initMenu(router,store);
       next();
     }else {
       next('/?redirect='+to.path);
     }
   }
-
 })
 
 /* eslint-disable no-new */

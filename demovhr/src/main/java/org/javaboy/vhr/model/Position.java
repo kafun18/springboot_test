@@ -1,5 +1,7 @@
 package org.javaboy.vhr.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 public class Position {
@@ -7,6 +9,7 @@ public class Position {
 
     private String name;
 
+    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss",timezone = "Asia/Shaihai")
     private Date createDate;
 
     private Boolean enabled;

@@ -10,6 +10,12 @@
   <sql id="Base_Column_List" >
     id, name, createDate, enabled
   </sql>
+  <delete id="deletePositionByIds">
+    DELETE FROM POSITION WHERE id IN
+    <foreach collection="ids" item="id" separator="," open="(" close=")">
+      #{id}
+    </foreach>
+  </delete>
   <select id="getAllPositions" resultMap="BaseResultMap">
     SELECT * FROM POSITION
   </select>

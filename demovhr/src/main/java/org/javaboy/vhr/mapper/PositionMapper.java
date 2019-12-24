@@ -1,5 +1,6 @@
 package org.javaboy.vhr.mapper;
 
+import org.apache.ibatis.annotations.Param;
 import org.javaboy.vhr.model.Position;
 import org.javaboy.vhr.model.RespBean;
 
@@ -20,4 +21,5 @@ public interface PositionMapper {
 
     List<Position> getAllPositions();
 
+    Integer deletePositionByIds(@Param("ids") Integer[] ids);
 }
