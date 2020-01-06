@@ -29,6 +29,18 @@ public class Test1 {
         m22.put("name","银行档案2");
         lm22.add(m22);
 
+        /*List<Map<String,Object>> lt11 = new ArrayList<>();
+        Map<String,Object> t11 = new HashMap<>();
+        t11.put("banktypecode","4");
+        t11.put("name","银行类别1");
+        lt11.add(t11);
+
+        List<Map<String,Object>> lt22 = new ArrayList<>();
+        Map<String,Object> t22 = new HashMap<>();
+        t22.put("banktypecode","5");
+        t22.put("name","银行类别2");
+        lt22.add(t22);*/
+
         Map<String,Object> m1 = new HashMap<>();
         m1.put("code","2");
         m1.put("name","银行信息1");
@@ -39,7 +51,7 @@ public class Test1 {
         m2.put("code","3");
         m2.put("name","银行信息2");
         m2.put("bankaccount",lm22);
-        m2.put("banktype","2");
+        m2.put("banktype","4");
 
         List<Map<String,Object>> ms = new ArrayList<>();
         ms.add(m1);
@@ -55,12 +67,14 @@ public class Test1 {
 
         List<Map<String,Object>> lm = (List<Map<String, Object>>) m.get("bodymdm_merchants_yhxx");
         if(lm.size()!=0){
-            List<Map<String, Object>> l = (List<Map<String, Object>>) m.get("bodymdm_merchants_yhxx");
-            for(Map<String, Object> mmm1:l){
+//            List<Map<String, Object>> l = (List<Map<String, Object>>) m.get("bodymdm_merchants_yhxx");
+            for(Map<String, Object> mmm1:lm){
                 List<Map<String, Object>> m_bankaccount = (List<Map<String, Object>>) mmm1.get("bankaccount");
+//                List<Map<String, Object>> m_bankatype = (List<Map<String, Object>>) mmm1.get("banktype");
 //                String m_banktype = (String) mmm1.get("banktype");
                 for(Map<String, Object> mmm2: m_bankaccount){
                     String mdm_code = (String) mmm2.get("mdm_code");
+//                    m_bankatype.get(0).put("banktypecode",mdm_code);
                     mmm1.put("banktype",mdm_code);
                 }
             }

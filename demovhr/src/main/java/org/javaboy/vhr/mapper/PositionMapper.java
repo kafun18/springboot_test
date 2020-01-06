@@ -19,7 +19,10 @@ public interface PositionMapper {
 
     int updateByPrimaryKey(Position record);
 
+    //查询所有职位
     List<Position> getAllPositions();
 
+    //根据id删除职位
     Integer deletePositionByIds(@Param("ids") Integer[] ids);
+
 }

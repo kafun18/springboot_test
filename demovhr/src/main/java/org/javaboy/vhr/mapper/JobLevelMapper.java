@@ -18,7 +18,9 @@ public interface JobLevelMapper {
 
     int updateByPrimaryKey(JobLevel record);
 
+    //查询所有职称
     List<JobLevel> getAllJobLevels();
 
+    //根据id删除职称
     Integer deleteJobLevelsByIds(@Param("ids") Integer[] ids);
 }

@@ -1,6 +1,6 @@
 package org.javaboy.vhr.model;
 
-public class Politicsstatus {
+public class PoliticsStatus {
     private Integer id;
 
     private String name;

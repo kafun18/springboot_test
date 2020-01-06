@@ -2,6 +2,8 @@ package org.javaboy.vhr.mapper;
 
 import org.javaboy.vhr.model.Nation;
 
+import java.util.List;
+
 public interface NationMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -14,4 +16,7 @@ public interface NationMapper {
     int updateByPrimaryKeySelective(Nation record);
 
     int updateByPrimaryKey(Nation record);
+
+    //查询所有民族
+    List<Nation> getAllNations();
 }

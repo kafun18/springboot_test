@@ -16,6 +16,8 @@ import {putRequest} from "./utils/api";
 import {getRequest} from "./utils/api";
 import {deleteRequest} from "./utils/api";
 import {initMenu} from "./utils/menu";
+// 导入font-awesome图标样式
+import 'font-awesome/css/font-awesome.min.css'
 
 Vue.prototype.postRequest=postRequest;
 Vue.prototype.postKeyValueRequest=postKeyValueRequest;
