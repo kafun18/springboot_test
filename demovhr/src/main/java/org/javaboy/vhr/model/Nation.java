@@ -5,6 +5,25 @@ public class Nation {
 
     private String name;
 
+    public Nation(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Nation nation = (Nation) o;
+
+        return name.equals(nation.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return name.hashCode();
+    }
+
     public Integer getId() {
         return id;
     }
