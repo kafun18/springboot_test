@@ -9,6 +9,25 @@ public class JobLevel {
 
     private String name;
 
+    public JobLevel(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        JobLevel jobLevel = (JobLevel) o;
+
+        return name.equals(jobLevel.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return name.hashCode();
+    }
+
     private String titleLevel;
 
     @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss",timezone = "Asia/Shaihai")

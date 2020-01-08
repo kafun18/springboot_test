@@ -26,4 +26,6 @@ public interface EmployeeMapper {
 
     //查询员工号最大值
     Integer maxWorkID();
+
+    Integer addEmps(@Param("list") List<Employee> list);
 }

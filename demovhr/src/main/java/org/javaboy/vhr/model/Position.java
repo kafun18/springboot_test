@@ -9,6 +9,25 @@ public class Position {
 
     private String name;
 
+    public Position(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Position position = (Position) o;
+
+        return name.equals(position.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return name.hashCode();
+    }
+
     @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss",timezone = "Asia/Shaihai")
     private Date createDate;
 

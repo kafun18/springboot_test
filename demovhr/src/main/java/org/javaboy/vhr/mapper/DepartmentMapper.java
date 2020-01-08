@@ -17,6 +17,9 @@ public interface DepartmentMapper {
 
     int updateByPrimaryKey(Department record);
 
-    //查询所有部门
+    //查询所有部门(有下级级别)
     List<Department> getAllDepartmentsByParentId(Integer parentId);
+
+    //查询所有部门
+    List<Department> getAllDepartmentsWithOutChildren();
 }

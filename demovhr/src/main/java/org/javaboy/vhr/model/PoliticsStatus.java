@@ -5,6 +5,25 @@ public class PoliticsStatus {
 
     private String name;
 
+    public PoliticsStatus(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        PoliticsStatus that = (PoliticsStatus) o;
+
+        return name.equals(that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return name.hashCode();
+    }
+
     public Integer getId() {
         return id;
     }
