@@ -4,27 +4,35 @@
       <el-input size="small" placeholder="请输入角色英文名" v-model="role.name">
         <template slot="prepend">ROLE_</template>
       </el-input>
-      <el-input size="small" placeholder="请输入角色中文名" v-model="role.nameZh"></el-input>
-      <el-button type="primary" size="small" icon="el-icon-plus">添加角色</el-button>
+      <el-input size="small" placeholder="请输入角色中文名" v-model="role.nameZh"
+                @keydown.enter.native="doAddRole"></el-input>
+      <el-button type="primary" size="small" icon="el-icon-plus" @click="doAddRole">添加角色</el-button>
     </div>
       <div class="permissManaMain">
-        <el-collapse v-model="activeName" accordion>
-          <el-collapse-item title="一致性 Consistency" name="1">
-            <div>与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念；</div>
-            <div>在界面中一致：所有的元素和结构需保持一致，比如：设计样式、图标和文本、元素的位置等。</div>
-          </el-collapse-item>
-          <el-collapse-item title="反馈 Feedback" name="2">
-            <div>控制反馈：通过界面样式和交互动效让用户可以清晰的感知自己的操作；</div>
-            <div>页面反馈：操作后，通过页面元素的变化清晰地展现当前状态。</div>
-          </el-collapse-item>
-          <el-collapse-item title="效率 Efficiency" name="3">
-            <div>简化流程：设计简洁直观的操作流程；</div>
-            <div>清晰明确：语言表达清晰且表意明确，让用户快速理解进而作出决策；</div>
-            <div>帮助用户识别：界面简单直白，让用户快速识别而非回忆，减少用户记忆负担。</div>
-          </el-collapse-item>
-          <el-collapse-item title="可控 Controllability" name="4">
-            <div>用户决策：根据场景可给予用户操作建议或安全提示，但不能代替用户进行决策；</div>
-            <div>结果可控：用户可以自由的进行操作，包括撤销、回退和终止当前操作等。</div>
+        <el-collapse v-model="activeNames" accordion @change="change">
+          <el-collapse-item :title="r.nameZh" :name="r.id" v-for="(r,index) in roles" :key="index">
+            <el-card class="box-card">
+              <div slot="header" class="clearfix">
+                <span>可访问的资源</span>
+                <el-button style="float: right; padding: 3px 0;color: #ff0000"
+                           icon="el-icon-delete" type="text" @click="deleteRole(r)"></el-button>
+              </div>
+              <div >
+                <!--:default-checked-keys默认选中-->
+                <!--:key="index"保证每打开一个树折叠都是对应那一个-->
+                <el-tree
+                  show-checkbox
+                  node-key="id"
+                  ref="tree"
+                  :key="index"
+                  :default-checked-keys="selectedMenus"
+                  :data="allMenus" :props="defaultProps"></el-tree>
+                <div style="display:flex;justify-content: flex-end">
+                  <el-button @click="cancelUpdate">取消修改</el-button>
+                  <el-button type="primary" @click="doUpdate(r.id,index)">确认修改</el-button>
+                </div>
+              </div>
+            </el-card>
           </el-collapse-item>
         </el-collapse>
       </div>
@@ -36,11 +44,104 @@
     name: "PermissMana",
     data() {
       return {
-        activeName:'2',
+        activeNames:-1,
         role:{
           name:'',
           nameZh:''
+        },
+        roles:[],
+        allMenus:[],
+        selectedMenus:[],
+        defaultProps: {
+          children: 'children',
+          label: 'name'
         }
+      }
+    },
+    mounted(){
+      this.initRoles();
+    },
+    methods:{
+      deleteRole(role){
+        this.$confirm('此操作将永久删除【' + role.nameZh + '】角色, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.deleteRequest("/system/basic/permiss/role/" + role.id).then(resp => {
+            if (resp) {
+              this.initRoles();
+            }
+          })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });
+        });
+      },
+      doAddRole(){
+        if (this.role.name && this.role.nameZh){
+          this.postRequest("/system/basic/permiss/role", this.role).then(resp => {
+            if (resp) {
+              this.role.name = '';
+              this.role.nameZh = '';
+              this.initRoles();
+            }
+          })
+        }else {
+          this.$message.error("数据不可以为空");
+        }
+
+      },
+      cancelUpdate(){
+        this.activeNames=-1;
+      },
+      doUpdate(rid,index){
+        let tree = this.$refs.tree[index];
+        // true只返回叶子节点
+        let selectedKeys = tree.getCheckedKeys(true);
+        let url='/system/basic/permiss/?rid='+rid;
+        // 遍历要更新的mid
+        selectedKeys.forEach(key=>{
+          url += '&mids='+key;
+        })
+        this.putRequest(url).then(resp=>{
+          if (resp){
+            // this.initRoles();
+            this.initSelectedMenus(rid);
+            //折叠面板关掉
+            this.activeNames=-1;
+          }
+        })
+      },
+      // 展开树形控件
+      change(rid){
+        if (rid){
+          this.initAllMenus();
+          this.initSelectedMenus(rid);
+        }
+      },
+      initSelectedMenus(rid){
+        this.getRequest("/system/basic/permiss/mids/"+rid).then(resp=>{
+          if (resp){
+            this.selectedMenus = resp;
+          }
+        })
+      },
+      initRoles(){
+        this.getRequest("/system/basic/permiss/").then(resp=>{
+          if (resp){
+            this.roles = resp;
+          }
+        })
+      },
+      initAllMenus(){
+        this.getRequest("/system/basic/permiss/menus/").then(resp=>{
+          if (resp){
+            this.allMenus = resp;
+          }
+        })
       }
     }
   }

@@ -27,7 +27,8 @@ Vue.prototype.deleteRequest=deleteRequest;
 
 Vue.config.productionTip = false
 
-Vue.use(ElementUI);
+// {size:'small'}全局配置样式
+Vue.use(ElementUI,{size:'small'});
 Vue.use(ViewUI);
 
 /*全局前置导航钩子 beforeEach
