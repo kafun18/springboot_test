@@ -27,4 +27,10 @@ public class UserListController {
         model.addAttribute("users",users);
         return "user";
     }
+
+    @GetMapping("/ditu")
+    public String ditu(){
+        return "ditu";
+    }
+
 }

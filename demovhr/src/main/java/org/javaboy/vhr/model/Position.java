@@ -9,6 +9,10 @@ public class Position {
 
     private String name;
 
+    public Position(){
+        super();
+    }
+
     public Position(String name) {
         this.name = name;
     }

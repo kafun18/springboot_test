@@ -9,6 +9,10 @@ public class JobLevel {
 
     private String name;
 
+    public JobLevel(){
+        super();
+    }
+
     public JobLevel(String name) {
         this.name = name;
     }

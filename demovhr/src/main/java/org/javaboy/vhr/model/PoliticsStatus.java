@@ -5,6 +5,10 @@ public class PoliticsStatus {
 
     private String name;
 
+    public PoliticsStatus() {
+
+    }
+
     public PoliticsStatus(String name) {
         this.name = name;
     }

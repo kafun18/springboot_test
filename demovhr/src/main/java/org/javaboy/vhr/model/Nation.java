@@ -5,6 +5,10 @@ public class Nation {
 
     private String name;
 
+    public Nation() {
+
+    }
+
     public Nation(String name) {
         this.name = name;
     }

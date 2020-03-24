@@ -3,6 +3,7 @@ package org.javaboy.vhr.mapper;
 import org.apache.ibatis.annotations.Param;
 import org.javaboy.vhr.model.Employee;
 
+import java.util.Date;
 import java.util.List;
 
 public interface EmployeeMapper {
@@ -19,10 +20,11 @@ public interface EmployeeMapper {
     int updateByPrimaryKey(Employee record);
 
     //查询员工基本信息（分页）
-    List<Employee> getEmployeeByPage(@Param("page") Integer page, @Param("size") Integer size, @Param("keyword") String keyword);
+    List<Employee> getEmployeeByPage(@Param("page") Integer page, @Param("size") Integer size,
+                                     @Param("emp") Employee employee, @Param("beginDateScope") Date[] beginDateScope);
 
     //查询员工总数
-    Long getTotal(@Param("keyword") String keyword);
+    Long getTotal(@Param("emp") Employee employee, @Param("beginDateScope") Date[] beginDateScope);
 
     //查询员工号最大值
     Integer maxWorkID();
