@@ -4,6 +4,7 @@ import Router from 'vue-router'
 import Login from '@/page/Login'
 // import Demo from '@/components/Demo'
 import Home from '@/page/Home'
+import FriendChat from '../page/chat/FriendChat'
 // import Test1 from '@/page/Test1'
 // import Test2 from '@/page/Test2'
 
@@ -21,7 +22,13 @@ export default new Router({
       path: '/home',
       name: 'Home',
       component: Home,
-      hidden:true
+      hidden:true,
+      children:[{
+        path: '/chat',
+        name: '在线聊天',
+        component: FriendChat,
+        hidden:true
+      }]
     },
     /*{
       path: '/home',
