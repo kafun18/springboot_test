@@ -10,6 +10,8 @@ export const initMenu = (router,store)=>{
             let fmtRoutes = formatRoutes(data);
             router.addRoutes(fmtRoutes);
             store.commit('initRoutes',fmtRoutes);
+            // 初始化store文件的socket连接connect
+            store.dispatch('connect');
         }
     })
 }

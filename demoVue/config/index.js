@@ -17,6 +17,11 @@ module.exports = {
         pathRewrite: {
           '^/': ''
         }
+      },
+      // webSocket代理请求
+      '/ws/*': {
+        target: 'ws://127.0.0.1:8081',
+        ws:true
       }
     },
 

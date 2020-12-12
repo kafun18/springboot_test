@@ -50,6 +50,8 @@
               if (resp) {
                 // console.log(resp);
                 // alert(JSON.stringify(resp));
+                // 为了让聊天界面可以准确及时获取用户信息，而不是从session等其他途径获取
+                this.$store.commit('INIT_CURRENTHR',resp.obj);
                 window.sessionStorage.setItem("user", JSON.stringify(resp.obj));
                 let path = this.$route.query.redirect;
                 this.$router.replace((path=='/' || path==undefined)?'/home':path);
